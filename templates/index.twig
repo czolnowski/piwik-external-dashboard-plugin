@@ -1,0 +1,56 @@
+<!doctype html><!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]--><!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]--><!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]--><!--[if gt IE 8]><!--><html class="no-js"><!--<![endif]--><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Piwik Dashboard</title><base href="/"><meta name="description" content=""><meta name="viewport" content="width=device-width"><!-- Place favicon.ico and apple-touch-icon.png in the root directory --><link rel="stylesheet" href="plugins/ExternalDashboard/assets/styles/45bd284f.vendor.css"><link rel="stylesheet" href="plugins/ExternalDashboard/assets/styles/5dc147fb.main.css">
+</head>
+<body><!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]--><!-- Add your site or application content here --><div ng-view=""></div><div class="footer"><div class="container"><p class="text-muted text-center"><a href="https://piwik.pro">Piwik PRO</a></p></div></div><div data-application-backdrop=""></div><div data-growl=""></div><div class="overlay text-center bootstrap-loader"><div class="inner"><i class="fa fa-spinner fa-spin fa-5x"></i><br>Loading ...</div></div><!--[if lt IE 9]>
+    <script src="plugins/ExternalDashboard/assets/bower_components/es5-shim/es5-shim.js"></script>
+    <script src="plugins/ExternalDashboard/assets/bower_components/json3/lib/json3.min.js"></script>
+    <![endif]--><script src="plugins/ExternalDashboard/assets/scripts/6d3179ab.vendor.js"></script>
+<script src="plugins/ExternalDashboard/assets/scripts/2b1bc84e.scripts.js"></script><script>(function (db, document) {
+        'use strict';
+
+        var deferValue = function (value) {
+                return function ($q) {
+                    var defer = $q.defer();
+
+                    defer.resolve(value);
+
+                    return defer.promise;
+                }
+            };
+
+        db.bootstrap({
+            element: document   ,
+            module: 'piwik-external-dashboard',
+            moduleResolves: [
+                {
+                    module: 'piwik-external-dashboard.application',
+                    resolve: {
+                        ASSETS_BASE_PATH: ['$q', deferValue('plugins/ExternalDashboard/assets/')],
+                        LOGGED_IN_USER: ['$q', deferValue({
+                            tokenAuth: '{{ tokenAuth }}',
+                            login: '{{ login }}',
+                            host: '{{ host }}'
+                        })],
+                        USE_HTML5_MODE: ['$q', deferValue(false)],
+                        LOGO_BACK_URL: ['$q', deferValue('/index.php?module=CoreHome')],
+                        REPORTS_SOURCE: ['$q', deferValue({
+                            source: 'piwik-api'
+                        })],
+                        AUTH_SOURCE: ['$q', deferValue({
+                            source: 'piwik-api'
+                        })],
+                        USERS_SOURCE: ['$q', deferValue({
+                            source: 'piwik-api'
+                        })],
+                        SITES_SOURCE: ['$q', deferValue({
+                            source: 'piwik-api'
+                        })],
+                    }
+                }
+            ],
+            onError: function (error) {
+                alert('Could not bootstrap, error: ' + error);
+            }
+        });
+    })(window.deferredBootstrapper, window.document);</script>

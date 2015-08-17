@@ -1,0 +1,16 @@
+{
+  "name": "ExternalDashboard",
+  "version": "1.0.0",
+  "description": "External dashboard for Piwik",
+  "theme": false,
+  "require": {
+    "piwik": ">=2.0.0"
+  },
+  "authors": [
+    {
+      "name": "Marcin Czołnowski",
+      "email": "marcin@czolnowski.net",
+      "homepage": "http://mindweb.pl"
+    }
+  ]
+}
